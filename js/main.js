@@ -13,11 +13,16 @@ const audioInputSelect = document.querySelector("select#audioSource");
 const audioOutputSelect = document.querySelector("select#audioOutput");
 const videoSelect = document.querySelector("select#videoSource");
 const selectors = [audioInputSelect, audioOutputSelect, videoSelect];
+const initialFind = true
 
 audioOutputSelect.disabled = !("sinkId" in HTMLMediaElement.prototype);
 
-function findDevices() {
+function findDevices(initial) {
 	navigator.mediaDevices.enumerateDevices().then(gotDevices).catch(handleError);
+	if (!initial) {
+		var updateDiv = document.getElementById("update")
+		updateDiv.innerHTML = "<p>updated...</p>"
+	}
 }
 
 function gotDevices(deviceInfos) {
@@ -63,9 +68,9 @@ function activateDevice(dev) {
 	// pass
 }
 
-findDevices()
+findDevices(initialFind)
 
-navigator.mediaDevices.ondevicechange = findDevices()
+navigator.mediaDevices.ondevicechange = findDevices(false)
 
 // Attach audio output device to video element using device/sink ID.
 function attachSinkId(element, sinkId) {
