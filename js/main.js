@@ -67,7 +67,7 @@ function activateDevice(dev) {
 	// pass
 }
 
-findDevices(initialFind)
+findDevices()
 
 navigator.mediaDevices.ondevicechange = findDevices
 
