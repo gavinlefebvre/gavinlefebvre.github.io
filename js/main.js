@@ -13,16 +13,15 @@ const audioInputSelect = document.querySelector("select#audioSource");
 const audioOutputSelect = document.querySelector("select#audioOutput");
 const videoSelect = document.querySelector("select#videoSource");
 const selectors = [audioInputSelect, audioOutputSelect, videoSelect];
-const initialFind = true
+var timeOutFunc
 
 audioOutputSelect.disabled = !("sinkId" in HTMLMediaElement.prototype);
 
 function findDevices(initial) {
 	navigator.mediaDevices.enumerateDevices().then(gotDevices).catch(handleError);
-	if (!initial) {
-		var updateDiv = document.getElementById("update")
-		updateDiv.innerHTML = "<p>updated...</p>"
-	}
+	var updateDiv = document.getElementById("update")
+	updateDiv.classList.remove('hidden')
+	timeOutFunc = setTimeout(function() {updateDiv.classList.add('hidden') } , 3000);
 }
 
 function gotDevices(deviceInfos) {
