@@ -16,6 +16,10 @@ const selectors = [audioInputSelect, audioOutputSelect, videoSelect];
 
 audioOutputSelect.disabled = !("sinkId" in HTMLMediaElement.prototype);
 
+function findDevices() {
+	navigator.mediaDevices.enumerateDevices().then(gotDevices).catch(handleError);
+}
+
 function gotDevices(deviceInfos) {
 	// Handles being called several times to update labels. Preserve values.
 	const values = selectors.map((select) => select.value);
@@ -59,7 +63,9 @@ function activateDevice(dev) {
 	// pass
 }
 
-navigator.mediaDevices.enumerateDevices().then(gotDevices).catch(handleError);
+findDevices()
+
+navigator.mediaDevices.ondevicechange = findDevices()
 
 // Attach audio output device to video element using device/sink ID.
 function attachSinkId(element, sinkId) {
