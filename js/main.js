@@ -41,14 +41,14 @@ function gotDevices(deviceInfos) {
 				deviceInfo.label || `microphone ${audioInputSelect.length + 1}`;
 			audioInputSelect.appendChild(option);
 			if(deviceInfo.label.toLowerCase.includes("bluetooth")) {
-				values[1] = deviceInfo.deviceId
+				values[0] = deviceInfo.deviceId
 			}
 		} else if (deviceInfo.kind === "audiooutput") {
 			option.text =
 				deviceInfo.label || `speaker ${audioOutputSelect.length + 1}`;
 			audioOutputSelect.appendChild(option);
 			if(deviceInfo.label.toLowerCase.includes("bluetooth")) {
-				values[2] = deviceInfo.deviceId
+				values[1] = deviceInfo.deviceId	
 			}			
 		} else if (deviceInfo.kind === "videoinput") {
 			option.text = deviceInfo.label || `camera ${videoSelect.length + 1}`;
