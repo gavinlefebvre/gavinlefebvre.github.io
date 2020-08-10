@@ -17,7 +17,7 @@ var timeOutFunc
 
 audioOutputSelect.disabled = !("sinkId" in HTMLMediaElement.prototype);
 
-function findDevices(initial) {
+function findDevices() {
 	navigator.mediaDevices.enumerateDevices().then(gotDevices).catch(handleError);
 	var updateDiv = document.getElementById("update")
 	updateDiv.classList.remove('hidden')
