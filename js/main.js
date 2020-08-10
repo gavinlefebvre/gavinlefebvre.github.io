@@ -144,10 +144,14 @@ function start() {
 		});
 	}
 	const audioSource = audioInputSelect.value;
-	if(audioSource) { document.cookie = "mic=" + audioInputSelect.value; }
+	if(audioSource) { 
+		document.cookie = "mic=" + audioInputSelect.value; 
+	}
 	
 	const videoSource = videoSelect.value;
-	if(videoSource) { document.cookie = "camera=" + videoSelect.value; }
+	if(videoSource) { 
+		document.cookie = "camera=" + videoSelect.value; 
+	}
 	
 	const constraints = {
 		audio: { deviceId: audioSource ? { exact: audioSource } : undefined },
@@ -158,6 +162,10 @@ function start() {
 		.then(gotStream)
 		.then(gotDevices)
 		.catch(handleError);
+	
+	if(!micEnabled) {
+		toggleMicMute();
+	}
 }
 
 audioInputSelect.onchange = start;
