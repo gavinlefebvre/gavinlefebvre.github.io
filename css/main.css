@@ -14,7 +14,7 @@
     color: whitesmoke;
   }
 
-  .mirror video {
+  .mirror {
     transform: scaleX(-1); /* Flip user video so it looks like a mirror */
   }
 
