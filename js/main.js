@@ -28,11 +28,11 @@ function gotDevices(deviceInfos) {
 	// Handles being called several times to update labels. Preserve values.
 	const values = selectors.map((select) => select.value);
 	// But, also check for empty values
-	for(let i=0; i=1; i++) {
-		if(!values[i]) {
-			values[i] = 'communication'
-		}
-	}
+	// for(let i=0; i=1; i++) {
+	// 	if(!values[i]) {
+	// 		values[i] = 'communication'
+	// 	}
+	// }
 	selectors.forEach((select) => {
 		while (select.firstChild) {
 			select.removeChild(select.firstChild);
