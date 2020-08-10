@@ -27,6 +27,12 @@ function findDevices(initial) {
 function gotDevices(deviceInfos) {
 	// Handles being called several times to update labels. Preserve values.
 	const values = selectors.map((select) => select.value);
+	// But, also check for empty values
+	for(let i=0; i=1; i++) {
+		if(!values[i]) {
+			values[i] = 'communication'
+		}
+	}
 	selectors.forEach((select) => {
 		while (select.firstChild) {
 			select.removeChild(select.firstChild);
@@ -40,16 +46,16 @@ function gotDevices(deviceInfos) {
 			option.text =
 				deviceInfo.label || `microphone ${audioInputSelect.length + 1}`;
 			audioInputSelect.appendChild(option);
-			if(option.text.toLowerCase().includes("bluetooth")) {
-				values[0] = deviceInfo.deviceId
-			}
+			// if(option.text.toLowerCase().includes("bluetooth")) {
+			// 	values[0] = deviceInfo.deviceId
+			// }
 		} else if (deviceInfo.kind === "audiooutput") {
 			option.text =
 				deviceInfo.label || `speaker ${audioOutputSelect.length + 1}`;
 			audioOutputSelect.appendChild(option);
-			if(option.text.toLowerCase().includes("bluetooth")) {
-				values[1] = deviceInfo.deviceId	
-			}			
+			// if(option.text.toLowerCase().includes("bluetooth")) {
+			// 	values[1] = deviceInfo.deviceId	
+			// }			
 		} else if (deviceInfo.kind === "videoinput") {
 			option.text = deviceInfo.label || `camera ${videoSelect.length + 1}`;
 			videoSelect.appendChild(option);
@@ -101,7 +107,17 @@ function attachSinkId(element, sinkId) {
 
 function changeAudioDestination() {
 	const audioDestination = audioOutputSelect.value;
+	document.cookie = "speaker=" + audioDestination;
 	attachSinkId(videoElement, audioDestination);
+}
+
+function changeAudioSource() {
+	document.cookie = "mic=" + audioInputSelect.value;
+	start()
+}
+
+function changeVideoSource() {
+	document.cookie = "camera=" + videoSelect.value;
 }
 
 function gotStream(stream) {
@@ -138,9 +154,9 @@ function start() {
 		.catch(handleError);
 }
 
-audioInputSelect.onchange = start;
+audioInputSelect.onchange = changeAudioSource;
 audioOutputSelect.onchange = changeAudioDestination;
 
-videoSelect.onchange = start;
+videoSelect.onchange = changeVideoSource;
 
 start();
