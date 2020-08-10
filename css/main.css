@@ -8,6 +8,13 @@
  .hidden {
     display: none;
   }
+
+  .vert-space {
+    border: dashed 3px #333333;
+    background-color: gray;
+    border-radius: 10px;
+    height: 60px;
+  }
   
   .highlight {
     background-color: #eee;
