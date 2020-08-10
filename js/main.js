@@ -112,12 +112,17 @@ function changeAudioDestination() {
 }
 
 function changeAudioSource() {
-	document.cookie = "mic=" + audioInputSelect.value;
+	if(audioInputSelect.value) {
+		document.cookie = "mic=" + audioInputSelect.value;
+	}
 	start()
 }
 
 function changeVideoSource() {
-	document.cookie = "camera=" + videoSelect.value;
+	if(videoSelect.value) {
+		document.cookie = "camera=" + videoSelect.value;
+	}
+	start();
 }
 
 function gotStream(stream) {
