@@ -111,20 +111,6 @@ function changeAudioDestination() {
 	attachSinkId(videoElement, audioDestination);
 }
 
-function changeAudioSource() {
-	if(audioInputSelect.value) {
-		document.cookie = "mic=" + audioInputSelect.value;
-	}
-	start()
-}
-
-function changeVideoSource() {
-	if(videoSelect.value) {
-		document.cookie = "camera=" + videoSelect.value;
-	}
-	start();
-}
-
 function gotStream(stream) {
 	window.stream = stream; // make stream available to console
 	videoElement.srcObject = stream;
@@ -147,7 +133,11 @@ function start() {
 		});
 	}
 	const audioSource = audioInputSelect.value;
+	if(audioSource) { document.cookie = "mic=" + audioInputSelect.value; }
+	
 	const videoSource = videoSelect.value;
+	if(videoSource) { document.cookie = "camera=" + videoSelect.value; }
+	
 	const constraints = {
 		audio: { deviceId: audioSource ? { exact: audioSource } : undefined },
 		video: { deviceId: videoSource ? { exact: videoSource } : undefined },
@@ -159,9 +149,9 @@ function start() {
 		.catch(handleError);
 }
 
-audioInputSelect.onchange = changeAudioSource;
+audioInputSelect.onchange = start;
 audioOutputSelect.onchange = changeAudioDestination;
 
-videoSelect.onchange = changeVideoSource;
+videoSelect.onchange = start;
 
 start();
