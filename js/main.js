@@ -79,7 +79,7 @@ function gotDevices(deviceInfos) {
 function toggleMicMute() {
 	micEnabled = !micEnabled;
 	if(window.stream) {
-		window.stream.getVideoTracks()[0].enabled = micEnabled;
+		window.stream.getAudioTracks()[0].enabled = micEnabled;
 	}
 	
 	var muteBtn = document.getElementById("muteBtn");
