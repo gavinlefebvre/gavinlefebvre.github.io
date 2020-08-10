@@ -14,7 +14,8 @@ const audioOutputSelect = document.querySelector("select#audioOutput");
 const videoSelect = document.querySelector("select#videoSource");
 const selectors = [audioInputSelect, audioOutputSelect, videoSelect];
 var micEnabled = true;
-var timeOutFunc
+var camMirrored = true;
+var timeOutFunc;
 
 audioOutputSelect.disabled = !("sinkId" in HTMLMediaElement.prototype);
 
@@ -92,6 +93,19 @@ function toggleMicMute() {
 	}
 }
 
+function toggleCamMirror() {
+	camMirrored = !camMirrored
+	var vidElement = document.getElementById("video");
+	var mirrorBtn = document.getElementById("mirrorBtn")
+	if(!camMirrored) {
+		mirrorBtn.innerText = "unMirrored"
+		vidElement.classList.remove('mirror')
+	} else {
+		mirrorBtn.innerText = "Mirrored"
+		vidElement.classList.add('mirror')		
+	}
+}
+
 navigator.mediaDevices.ondevicechange = findDevices
 
 // Attach audio output device to video element using device/sink ID.
@@ -165,6 +179,9 @@ function start() {
 	
 	if(!micEnabled) {
 		toggleMicMute();
+	}
+	if(!camMirrored) {
+		toggleCamMirror();
 	}
 }
 
