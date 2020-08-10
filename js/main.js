@@ -13,6 +13,7 @@ const audioInputSelect = document.querySelector("select#audioSource");
 const audioOutputSelect = document.querySelector("select#audioOutput");
 const videoSelect = document.querySelector("select#videoSource");
 const selectors = [audioInputSelect, audioOutputSelect, videoSelect];
+var micEnabled = true;
 var timeOutFunc
 
 audioOutputSelect.disabled = !("sinkId" in HTMLMediaElement.prototype);
@@ -23,6 +24,7 @@ function findDevices() {
 	updateDiv.classList.remove('hidden')
 	timeOutFunc = setTimeout(function() {updateDiv.classList.add('hidden') } , 3000);
 }
+
 
 function gotDevices(deviceInfos) {
 	// Handles being called several times to update labels. Preserve values.
@@ -74,12 +76,21 @@ function gotDevices(deviceInfos) {
 	});
 }
 
-// Request labels by requesting user device
-function activateDevice(dev) {
-	// pass
+function toggleMicMute() {
+	micEnabled = !micEnabled;
+	if(window.stream) {
+		window.stream.getVideoTracks()[0].enabled = micEnabled;
+	}
+	
+	var muteBtn = document.getElementById("muteBtn");
+	if(!micEnabled) {
+		muteBtn.innerText = 'UnMute';
+		muteBtn.classList.add('muted');
+	} else {
+		muteBtn.innerText = 'Mute';
+		muteBtn.classList.remove('muted');
+	}
 }
-
-//findDevices()
 
 navigator.mediaDevices.ondevicechange = findDevices
 
